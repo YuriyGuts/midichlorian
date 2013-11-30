@@ -14,13 +14,13 @@ namespace YuriyGuts.Midichlorian.VSPackage
     /// IVsPackage interface and uses the registration attributes defined in the framework to 
     /// register itself and its components with the shell.
     /// </summary>
-    // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is
-    // a package.
-    [PackageRegistration(UseManagedResourcesOnly = true)]
-    // This attribute is used to register the information needed to show this package
-    // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidMidichlorianPackagePkgString)]
+    // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is a package.
+    [PackageRegistration(UseManagedResourcesOnly = true)]
+    // This attribute is used to register the information needed to show this package in the Help/About dialog of Visual Studio.
+    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    // This attribute registers the Options page for the package.
+    [ProvideOptionPage(typeof(OptionPage), "Midichlorian", "General", 0, 0, true)]
     public sealed class MidichlorianPackage : Package
     {
         /// <summary>
@@ -35,8 +35,6 @@ namespace YuriyGuts.Midichlorian.VSPackage
             Debug.WriteLine("Entering constructor for: {0}", ToString());
         }
 
-        /////////////////////////////////////////////////////////////////////////////
-        // Overridden Package Implementation
         #region Package Members
 
         /// <summary>
