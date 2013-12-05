@@ -14,7 +14,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
     /// IVsPackage interface and uses the registration attributes defined in the framework to 
     /// register itself and its components with the shell.
     /// </summary>
-    [Guid(GuidList.guidMidichlorianPackagePkgString)]
+    [Guid(PackageGuids.PackageGuidString)]
     // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is a package.
     [PackageRegistration(UseManagedResourcesOnly = true)]
     // This attribute is used to register the information needed to show this package in the Help/About dialog of Visual Studio.
@@ -47,6 +47,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
             base.Initialize();
 
         }
+
         #endregion
     }
 }
