@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.Text.Editor;
+﻿using Microsoft.VisualStudio.Text.Editor;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
     public class InsertTextAction : IdeAutomatableAction
     {
         public override string Name { get { return "Insert Text"; } }
-
-        public Dictionary<string, string> Options { get; set; }
 
         public override void Execute(object state)
         {
@@ -18,18 +15,20 @@ namespace YuriyGuts.Midichlorian.VSPackage
             }
 
             var textToInsert = string.Empty;
-            if (Options.ContainsKey("Text"))
+            if (Parameters.ContainsKey("Text"))
             {
-                textToInsert = Options["Text"];
+                textToInsert = Parameters["Text"];
             }
 
             textView.VisualElement.Dispatcher.Invoke(() =>
             {
-                using (var editOperation = textView.TextBuffer.CreateEdit())
+                if (textView.Caret.InVirtualSpace)
                 {
-                    editOperation.Insert(textView.Caret.Position.BufferPosition, textToInsert);
-                    editOperation.Apply();
+                    var spacerString = string.Empty.PadRight(textView.Caret.Position.VirtualSpaces);
+                    textView.TextBuffer.Insert(textView.Caret.Position.BufferPosition, spacerString);
+                    textView.Caret.MoveTo(textView.Caret.Position.BufferPosition);
                 }
+                textView.TextBuffer.Insert(textView.Caret.Position.BufferPosition, textToInsert);
             });
         }
     }

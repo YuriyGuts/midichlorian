@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Midichlorian>
+  <MidiInputDeviceName>Axiom 61</MidiInputDeviceName>
+  <MidiMappings>
+    <Mapping inputSequence="C2" action="InsertTextAction" paramText="public " />
+    <Mapping inputSequence="C#2" action="InsertTextAction" paramText="static " />
+    <Mapping inputSequence="D2" action="InsertTextAction" paramText="void " />
+    <Mapping inputSequence="D#2" action="InsertTextAction" paramText="Main" />
+    <Mapping inputSequence="E2" action="InsertTextAction" paramText="(" />
+    <Mapping inputSequence="F2" action="InsertTextAction" paramText="string" />
+    <Mapping inputSequence="F#2" action="InsertTextAction" paramText="[]" />
+    <Mapping inputSequence="G2" action="InsertTextAction" paramText=" " />
+    <Mapping inputSequence="G#2" action="InsertTextAction" paramText="args" />
+    <Mapping inputSequence="A2" action="InsertTextAction" paramText=")" />
+    <Mapping inputSequence="A#2" action="InsertTextAction" paramText=" " />
+    <Mapping inputSequence="B2" action="InsertTextAction" paramText=" " />
+  </MidiMappings>
+</Midichlorian>

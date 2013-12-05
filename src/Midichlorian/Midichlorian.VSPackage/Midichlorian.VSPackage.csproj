@@ -153,6 +153,7 @@
     <Compile Include="IdeAutomatableAction.cs" />
     <Compile Include="InsertTextAction.cs" />
     <Compile Include="MidiInputTrigger.cs" />
+    <Compile Include="MidiMappingMatcher.cs" />
     <Compile Include="MidiMappingProfile.cs" />
     <Compile Include="MidiMappingRecord.cs" />
     <Compile Include="PackageGuids.cs" />
