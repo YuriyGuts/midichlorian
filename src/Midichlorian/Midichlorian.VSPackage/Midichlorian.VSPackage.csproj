@@ -152,6 +152,7 @@
   <ItemGroup>
     <Compile Include="IdeAutomatableAction.cs" />
     <Compile Include="InsertTextAction.cs" />
+    <Compile Include="MidiEventBuffer.cs" />
     <Compile Include="MidiInputTrigger.cs" />
     <Compile Include="MidiMappingMatcher.cs" />
     <Compile Include="MidiMappingProfile.cs" />

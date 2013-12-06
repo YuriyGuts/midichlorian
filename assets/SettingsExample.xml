@@ -5,6 +5,7 @@
     <Mapping inputSequence="C2" action="InsertTextAction" paramText="public " />
     <Mapping inputSequence="C#2" action="InsertTextAction" paramText="static " />
     <Mapping inputSequence="D2" action="InsertTextAction" paramText="void " />
+    <Mapping inputSequence="C2,E2,G2" action="InsertTextAction" paramText="Main" />
     <Mapping inputSequence="D#2" action="InsertTextAction" paramText="Main" />
     <Mapping inputSequence="E2" action="InsertTextAction" paramText="(" />
     <Mapping inputSequence="F2" action="InsertTextAction" paramText="string" />
