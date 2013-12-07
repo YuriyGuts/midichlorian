@@ -157,6 +157,12 @@
     <Compile Include="MidiMappingMatcher.cs" />
     <Compile Include="MidiMappingProfile.cs" />
     <Compile Include="MidiMappingRecord.cs" />
+    <Compile Include="OptionPageMappingEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OptionPageMappingEditor.Designer.cs">
+      <DependentUpon>OptionPageMappingEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PackageGuids.cs" />
     <Compile Include="OptionPage.cs">
       <SubType>Component</SubType>
@@ -184,6 +190,9 @@
     <EmbeddedResource Include="OptionPageControl.resx">
       <DependentUpon>OptionPageControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionPageMappingEditor.resx">
+      <DependentUpon>OptionPageMappingEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -203,6 +212,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\MappingAdd.png" />
+    <None Include="Resources\MappingDelete.png" />
+    <None Include="Resources\MappingExport.png" />
+    <None Include="Resources\MappingImport.png" />
+    <None Include="Resources\MappingLearn.png" />
     <Content Include="Resources\Package.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

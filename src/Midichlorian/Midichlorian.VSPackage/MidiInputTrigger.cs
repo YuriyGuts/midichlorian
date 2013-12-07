@@ -45,7 +45,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
             return string.Join(separatorString, Pitches.Select(PitchToString));
         }
 
-        private static Pitch PitchFromString(string pitchString)
+        public static Pitch PitchFromString(string pitchString)
         {
             var parsePos = 0;
             var note = Note.ParseNote(pitchString, ref parsePos);
@@ -53,7 +53,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
             return note.PitchInOctave(octave);
         }
 
-        private static string PitchToString(Pitch pitch)
+        public static string PitchToString(Pitch pitch)
         {
             return string.Format("{0}{1}", pitch.NotePreferringSharps(), pitch.Octave());
         }

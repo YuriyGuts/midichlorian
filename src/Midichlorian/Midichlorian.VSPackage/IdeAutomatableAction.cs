@@ -14,5 +14,10 @@ namespace YuriyGuts.Midichlorian.VSPackage
         public Dictionary<string, string> Parameters { get; set; }
 
         public abstract void Execute(object state);
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Midi;
 
@@ -7,7 +9,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
 {
     partial class OptionPageControl : UserControl
     {
+        private static readonly TimeSpan chordWaitTime = TimeSpan.FromMilliseconds(100);
+
         private SettingsModel settings;
+        private OptionPageMappingEditor midiInputLearnTargetControl;
+        private MidiEventBuffer eventBuffer;
 
         public OptionPageControl()
         {
@@ -21,18 +27,29 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private InputDevice ReceivingMidiDevice { get; set; }
 
-        public void ApplySettingsToUI(SettingsModel settings)
+        public void ApplySettingsToUI(SettingsModel newSettings)
         {
-            BindData(settings);
+            BindData(newSettings);
         }
 
-        // TODO: Refactor this.
         public SettingsModel GetSettingsFromUI()
         {
+            var newMappingProfile = new MidiMappingProfile();
+            foreach (var mappingEditor in pnlMappingListItems.Controls)
+            {
+                if (mappingEditor is OptionPageMappingEditor)
+                {
+                    newMappingProfile.Mappings.Add((mappingEditor as OptionPageMappingEditor).GetMappingRecord());
+                }
+            }
+            
+            // Controls are stacked, and the bottom-most control is on top of the stack. So we should reverse the order.
+            newMappingProfile.Mappings.Reverse();
+
             return new SettingsModel
             {
                 MidiInputDeviceName = SelectedMidiDevice != null ? SelectedMidiDevice.Name : string.Empty,
-                MidiMappingProfile = settings.MidiMappingProfile,
+                MidiMappingProfile = newMappingProfile,
             };
         }
 
@@ -46,10 +63,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
                 try
                 {
-                    SelectedMidiDevice.Open();
-                    SelectedMidiDevice.NoteOn += ReceivingMidiDevice_NoteOn;
-                    SelectedMidiDevice.StartReceiving(null);
-                    ReceivingMidiDevice = SelectedMidiDevice;
+                    StartReceivingMidi();
                 }
                 catch (Exception ex)
                 {
@@ -59,14 +73,30 @@ namespace YuriyGuts.Midichlorian.VSPackage
             }
             else
             {
-                if (ReceivingMidiDevice != null)
-                {
-                    ReceivingMidiDevice.NoteOn -= ReceivingMidiDevice_NoteOn;
-                    ReceivingMidiDevice.StopReceiving();
-                    ReceivingMidiDevice.Close();
-                    ReceivingMidiDevice = null;
-                }
+                StopReceivingMidi();
                 lblMidiTestStatus.Visible = false;
+            }
+        }
+
+        private void StartReceivingMidi()
+        {
+            if (!SelectedMidiDevice.IsReceiving)
+            {
+                SelectedMidiDevice.Open();
+                SelectedMidiDevice.NoteOn += ReceivingMidiDevice_NoteOn;
+                SelectedMidiDevice.StartReceiving(null);
+                ReceivingMidiDevice = SelectedMidiDevice;
+            }
+        }
+
+        private void StopReceivingMidi()
+        {
+            if (ReceivingMidiDevice != null)
+            {
+                ReceivingMidiDevice.NoteOn -= ReceivingMidiDevice_NoteOn;
+                ReceivingMidiDevice.StopReceiving();
+                ReceivingMidiDevice.Close();
+                ReceivingMidiDevice = null;
             }
         }
 
@@ -79,7 +109,27 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private void LoadMappings()
         {
+            foreach (var mapping in settings.MidiMappingProfile.Mappings)
+            {
+                AddMappingEditorControl(mapping);
+            }
+        }
 
+        private void AddMappingEditorControl(MidiMappingRecord record)
+        {
+            var newEditor = new OptionPageMappingEditor();
+            newEditor.Dock = DockStyle.Top;
+            newEditor.MidiInputLearnRequested += mappingEditor_MidiInputLearnRequested;
+            newEditor.DeleteRequested += mappingEditor_DeleteRequested;
+            newEditor.SetMappingRecord(record);
+            pnlMappingListItems.Controls.Add(newEditor);
+            pnlMappingListItems.Controls.SetChildIndex(newEditor, 0);
+        }
+
+        private void RemoveMappingEditorControl(OptionPageMappingEditor control)
+        {
+            pnlMappingListItems.Controls.Remove(control);
+            control.Dispose();
         }
 
         private void ReceivingMidiDevice_NoteOn(NoteOnMessage msg)
@@ -91,12 +141,33 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 return;
             }
 
-            // MIDI receiver runs in a separate thread.
-            Invoke(new Action(() =>
+            if (midiInputLearnTargetControl != null)
             {
-                lblMidiTestStatus.ForeColor = Color.Green;
-                lblMidiTestStatus.Text = string.Format("Pitch: {0}   Velocity: {1}", msg.Pitch, msg.Velocity);
-            }));
+                if (eventBuffer.IsEmpty)
+                {
+                    // Let's try to capture a chord.
+                    // While this thread stores the incoming notes to the buffer,
+                    // a background thread will watch the time and process the buffer afterwards.
+                    new Thread(WaitAndFinalizeChord).Start();
+                }
+
+                eventBuffer.Add(msg);
+                return;
+            }
+
+            if (chkTestMidiInputDevice.Checked)
+            {
+                Invoke(new Action(() =>
+                {
+                    lblMidiTestStatus.ForeColor = Color.Green;
+                    lblMidiTestStatus.Text = string.Format
+                    (
+                        "Pitch: {0}   Velocity: {1}",
+                        MidiInputTrigger.PitchToString(msg.Pitch),
+                        msg.Velocity
+                    );
+                }));
+            }
         }
 
         private void chkTestMidiInputDevice_CheckedChanged(object sender, EventArgs e)
@@ -108,6 +179,62 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             chkTestMidiInputDevice.Checked = false;
             chkTestMidiInputDevice.Enabled = cmbMidiInputDevice.Items.Count > 0;
+        }
+
+        private void tbtnAddMapping_Click(object sender, EventArgs e)
+        {
+            AddMappingEditorControl(null);
+        }
+
+        private void tbtnImportFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbtnExportFile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mappingEditor_MidiInputLearnRequested(object sender, EventArgs e)
+        {
+            chkTestMidiInputDevice.Checked = false;
+
+            if (midiInputLearnTargetControl != null && midiInputLearnTargetControl != sender)
+            {
+                midiInputLearnTargetControl.TeachMidiInput(null);
+            }
+
+            midiInputLearnTargetControl = (OptionPageMappingEditor)sender;
+
+            // Hold on for a short time and allow other notes from this chord to be received.
+            Interlocked.CompareExchange(ref eventBuffer, new MidiEventBuffer(), null);
+
+            StartReceivingMidi();
+        }
+
+        private void mappingEditor_DeleteRequested(object sender, EventArgs e)
+        {
+            RemoveMappingEditorControl((OptionPageMappingEditor)sender);
+        }
+
+        private void WaitAndFinalizeChord()
+        {
+            // Allow to store other chord notes in the buffer.
+            Thread.Sleep(chordWaitTime);
+            StopReceivingMidi();
+
+            // Process collected events.
+            var bufferedEvents = eventBuffer.Flush();
+            var inputTrigger = new MidiInputTrigger(bufferedEvents.Select(e => e.Pitch).OrderBy(p => p).ToArray());
+
+            // Reset the buffer to return to normal mode.
+            Interlocked.CompareExchange(ref eventBuffer, null, eventBuffer);
+
+            var oldTargetControl = midiInputLearnTargetControl;
+            midiInputLearnTargetControl = null;
+
+            Invoke(new Action(() => oldTargetControl.TeachMidiInput(inputTrigger)));
         }
     }
 }

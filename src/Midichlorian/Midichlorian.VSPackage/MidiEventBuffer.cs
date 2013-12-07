@@ -12,6 +12,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
             eventQueue = new ConcurrentQueue<NoteMessage>();
         }
 
+        public bool IsEmpty
+        {
+            get { return eventQueue.IsEmpty; }
+        }
+
         public void Add(NoteMessage note)
         {
             eventQueue.Enqueue(note);
