@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.VisualStudio.Shell.Interop;
 using Midi;
-using Control = System.Windows.Forms.Control;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
@@ -207,12 +204,23 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private void tbtnImportFile_Click(object sender, EventArgs e)
         {
-
+            var openDialogResult = openProfileDialog.ShowDialog(this);
+            if (openDialogResult == DialogResult.OK)
+            {
+                var mappingProfile = SettingsPersistenceManager.LoadMappingsFromFile(openProfileDialog.FileName);
+                settings.MidiMappingProfile = mappingProfile;
+                LoadMappings();
+            }
         }
 
         private void tbtnExportFile_Click(object sender, EventArgs e)
         {
-
+            var saveDialogResult = saveProfileDialog.ShowDialog(this);
+            if (saveDialogResult == DialogResult.OK)
+            {
+                var mappingProfile = GetSettingsFromUI().MidiMappingProfile;
+                SettingsPersistenceManager.SaveMappingsToFile(mappingProfile, saveProfileDialog.FileName);
+            }
         }
 
         private void mappingEditor_MidiInputLearnRequested(object sender, EventArgs e)

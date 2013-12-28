@@ -16,25 +16,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
             var settings = new SettingsModel();
             settings.MidiInputDeviceName = settingsDocument.Root.Element("MidiInputDeviceName").Value;
-
-            settings.MidiMappingProfile = new MidiMappingProfile();
-            foreach (var mappingElement in settingsDocument.Root.Element("MidiMappings").Elements())
-            {
-                var actionType = Type.GetType(typeof(MidichlorianPackage).Namespace + "." + mappingElement.Attribute("action").Value);
-                
-                MidiMappingRecord mappingRecord = new MidiMappingRecord
-                {
-                    Trigger = MidiInputTrigger.Parse(mappingElement.Attribute("inputSequence").Value),
-                    Action = (IdeAutomatableAction)Activator.CreateInstance(actionType),
-                };
-
-                foreach (var param in mappingElement.Attributes().Where(attr => attr.Name.LocalName.StartsWith("param")))
-                {
-                    mappingRecord.Action.Parameters[param.Name.LocalName.Substring("param".Length)] = param.Value;
-                }
-
-                settings.MidiMappingProfile.Mappings.Add(mappingRecord);
-            }
+            settings.MidiMappingProfile = LoadMappingsFromXElement(settingsDocument.Root.Element("MidiMappings"));
 
             return settings;
         }
@@ -47,6 +29,26 @@ namespace YuriyGuts.Midichlorian.VSPackage
             settingsDocument.Root.Element("MidiMappings").Add(ConvertMappingsToXElements(settings.MidiMappingProfile));
 
             settingsDocument.Save(GetSettingsFileName());
+        }
+
+        public static MidiMappingProfile LoadMappingsFromFile(string fileName)
+        {
+            var xmlDocument = XDocument.Parse(File.ReadAllText(fileName));
+            return LoadMappingsFromXElement(xmlDocument.Root.Element("MidiMappings"));
+        }
+
+        public static void SaveMappingsToFile(MidiMappingProfile mappingProfile, string fileName)
+        {
+            XDocument profileDocument = new XDocument
+            (
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement
+                (
+                    "Midichlorian",
+                    new XElement("MidiMappings", ConvertMappingsToXElements(mappingProfile))
+                )
+            );
+            profileDocument.Save(fileName);
         }
 
         private static string GetSettingsFileName()
@@ -90,6 +92,29 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 )
             );
             return settingsDocument;
+        }
+
+        private static MidiMappingProfile LoadMappingsFromXElement(XElement element)
+        {
+            var mappingProfile = new MidiMappingProfile();
+            foreach (var mappingElement in element.Elements())
+            {
+                var actionType = Type.GetType(typeof(MidichlorianPackage).Namespace + "." + mappingElement.Attribute("action").Value);
+
+                MidiMappingRecord mappingRecord = new MidiMappingRecord
+                {
+                    Trigger = MidiInputTrigger.Parse(mappingElement.Attribute("inputSequence").Value),
+                    Action = (IdeAutomatableAction)Activator.CreateInstance(actionType),
+                };
+
+                foreach (var param in mappingElement.Attributes().Where(attr => attr.Name.LocalName.StartsWith("param")))
+                {
+                    mappingRecord.Action.Parameters[param.Name.LocalName.Substring("param".Length)] = param.Value;
+                }
+
+                mappingProfile.Mappings.Add(mappingRecord);
+            }
+            return mappingProfile;
         }
 
         private static IEnumerable<XElement> ConvertMappingsToXElements(MidiMappingProfile mappingProfile)

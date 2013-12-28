@@ -43,6 +43,8 @@
             this.tbtnImportFile = new System.Windows.Forms.ToolStripButton();
             this.tbtnExportFile = new System.Windows.Forms.ToolStripButton();
             this.pnlSpacer = new System.Windows.Forms.Panel();
+            this.openProfileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveProfileDialog = new System.Windows.Forms.SaveFileDialog();
             this.grpDeviceSettings.SuspendLayout();
             this.grpMappings.SuspendLayout();
             this.pnlMappingList.SuspendLayout();
@@ -204,6 +206,16 @@
             this.pnlSpacer.Size = new System.Drawing.Size(450, 10);
             this.pnlSpacer.TabIndex = 4;
             // 
+            // openProfileDialog
+            // 
+            this.openProfileDialog.DefaultExt = "midiprofile";
+            this.openProfileDialog.Filter = "MIDI mapping profiles (*.midiprofile)|*.midiprofile|All files|*.*";
+            // 
+            // saveProfileDialog
+            // 
+            this.saveProfileDialog.DefaultExt = "midiprofile";
+            this.saveProfileDialog.Filter = "MIDI mapping profiles (*.midiprofile)|*.midiprofile|All files|*.*";
+            // 
             // OptionPageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -242,6 +254,8 @@
         private System.Windows.Forms.ToolStripButton tbtnExportFile;
         private System.Windows.Forms.Panel pnlMappingListSpacer;
         private System.Windows.Forms.Panel pnlMappingListItems;
+        private System.Windows.Forms.OpenFileDialog openProfileDialog;
+        private System.Windows.Forms.SaveFileDialog saveProfileDialog;
 
     }
 }
