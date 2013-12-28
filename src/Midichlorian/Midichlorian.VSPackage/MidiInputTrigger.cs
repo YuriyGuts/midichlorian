@@ -7,7 +7,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
 {
     public class MidiInputTrigger
     {
-        private static readonly char[] separatorChars = { ',' };
+        private static readonly char[] separatorChars = { ',', ' ' };
         private static readonly string separatorString = separatorChars[0].ToString(CultureInfo.InvariantCulture);
 
         public Pitch[] Pitches { get; private set; }
@@ -35,27 +35,14 @@ namespace YuriyGuts.Midichlorian.VSPackage
         public static MidiInputTrigger Parse(string sequence)
         {
             var notes = sequence.Split(separatorChars, StringSplitOptions.RemoveEmptyEntries)
-                .Select(PitchFromString)
+                .Select(PitchConverter.PitchFromString)
                 .ToArray();
             return new MidiInputTrigger(notes);
         }
 
         public override string ToString()
         {
-            return string.Join(separatorString, Pitches.Select(PitchToString));
-        }
-
-        public static Pitch PitchFromString(string pitchString)
-        {
-            var parsePos = 0;
-            var note = Note.ParseNote(pitchString, ref parsePos);
-            var octave = int.Parse(pitchString.Substring(parsePos));
-            return note.PitchInOctave(octave);
-        }
-
-        public static string PitchToString(Pitch pitch)
-        {
-            return string.Format("{0}{1}", pitch.NotePreferringSharps(), pitch.Octave());
+            return string.Join(separatorString, Pitches.Select(PitchConverter.PitchToString));
         }
     }
 }

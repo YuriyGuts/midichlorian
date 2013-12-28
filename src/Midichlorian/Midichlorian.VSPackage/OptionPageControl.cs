@@ -177,7 +177,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
                     lblMidiTestStatus.Text = string.Format
                     (
                         "Pitch: {0}   Velocity: {1}",
-                        MidiInputTrigger.PitchToString(msg.Pitch),
+                        PitchConverter.PitchToString(msg.Pitch),
                         msg.Velocity
                     );
                 }));

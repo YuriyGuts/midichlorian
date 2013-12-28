@@ -173,6 +173,7 @@
     <Compile Include="OptionPageControl.Designer.cs">
       <DependentUpon>OptionPageControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="PitchConverter.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
