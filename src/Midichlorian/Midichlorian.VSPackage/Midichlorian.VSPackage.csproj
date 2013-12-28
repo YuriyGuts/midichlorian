@@ -150,6 +150,12 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionExtendedParameterEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionExtendedParameterEditForm.Designer.cs">
+      <DependentUpon>ActionExtendedParameterEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="IdeAutomatableAction.cs" />
     <Compile Include="InsertTextAction.cs" />
     <Compile Include="MidiEventBuffer.cs" />
@@ -188,6 +194,9 @@
     <Compile Include="TextViewAgentFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ActionExtendedParameterEditForm.resx">
+      <DependentUpon>ActionExtendedParameterEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionPageControl.resx">
       <DependentUpon>OptionPageControl.cs</DependentUpon>
     </EmbeddedResource>

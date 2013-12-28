@@ -79,7 +79,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             if (action != null)
             {
-                txtActionParams.Text = action.Parameters.First().Value;
+                txtActionParams.Text = SettingsPersistenceManager.EncodeActionParameter(action.Parameters.First().Value);
             }
         }
 
@@ -135,7 +135,21 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private string GetExtendedParameterInput()
         {
-            return "base64:DQo=";
+            string initialValue = txtActionParams.Text;
+            using (var extendedParamForm = new ActionExtendedParameterEditForm())
+            {
+                var formDisplayPoint = PointToScreen(new Point(txtActionParams.Left, txtActionParams.Top + txtActionParams.Height));
+                extendedParamForm.Left = formDisplayPoint.X;
+                extendedParamForm.Top = formDisplayPoint.Y;
+
+                extendedParamForm.LoadDataIntoUI(initialValue);
+                var result = extendedParamForm.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    return SettingsPersistenceManager.EncodeActionParameter(extendedParamForm.GetDataFromUI());
+                }
+            }
+            return initialValue;
         }
 
         private void cmbAction_SelectedIndexChanged(object sender, EventArgs e)
