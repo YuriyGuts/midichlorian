@@ -113,6 +113,7 @@
             // 
             this.grpMappings.Controls.Add(this.pnlMappingList);
             this.grpMappings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpMappings.Enabled = false;
             this.grpMappings.Location = new System.Drawing.Point(0, 95);
             this.grpMappings.Name = "grpMappings";
             this.grpMappings.Padding = new System.Windows.Forms.Padding(10);

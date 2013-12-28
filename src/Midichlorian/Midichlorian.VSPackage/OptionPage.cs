@@ -21,9 +21,14 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 {
                     optionPageControl = new OptionPageControl();
                 }
-                optionPageControl.ApplySettingsToUI(SettingsPersistenceManager.LoadSettings());
                 return optionPageControl;
             }
+        }
+
+        protected override void OnActivate(CancelEventArgs e)
+        {
+            base.OnActivate(e);
+            optionPageControl.ApplySettingsToUI(SettingsPersistenceManager.LoadSettings());
         }
 
         public override void SaveSettingsToStorage()

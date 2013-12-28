@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.VisualStudio.Shell.Interop;
 using Midi;
+using Control = System.Windows.Forms.Control;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
@@ -35,13 +38,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
         public SettingsModel GetSettingsFromUI()
         {
             var newMappingProfile = new MidiMappingProfile();
-            foreach (var mappingEditor in pnlMappingListItems.Controls)
-            {
-                if (mappingEditor is OptionPageMappingEditor)
-                {
-                    newMappingProfile.Mappings.Add((mappingEditor as OptionPageMappingEditor).GetMappingRecord());
-                }
-            }
+            ForEachMappingControl(control => newMappingProfile.Mappings.Add(control.GetMappingRecord()));
             
             // Controls are stacked, and the bottom-most control is on top of the stack. So we should reverse the order.
             newMappingProfile.Mappings.Reverse();
@@ -104,11 +101,18 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             cmbMidiInputDevice.DataSource = InputDevice.InstalledDevices;
             settings = newSettings;
+
+            foreach (var midiDevice in InputDevice.InstalledDevices.Where(dev => dev.Name == settings.MidiInputDeviceName))
+            {
+                cmbMidiInputDevice.SelectedItem = midiDevice;
+                break;
+            }
             LoadMappings();
         }
 
         private void LoadMappings()
         {
+            ForEachMappingControl(RemoveMappingEditorControl);
             foreach (var mapping in settings.MidiMappingProfile.Mappings)
             {
                 AddMappingEditorControl(mapping);
@@ -130,6 +134,19 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             pnlMappingListItems.Controls.Remove(control);
             control.Dispose();
+        }
+
+        private void ForEachMappingControl(Action<OptionPageMappingEditor> action)
+        {
+            // Copying items aggressively to support Remove operation.
+            var applicableControls = pnlMappingListItems.Controls
+                .OfType<OptionPageMappingEditor>()
+                .ToList();
+
+            foreach (var control in applicableControls)
+            {
+                action(control);
+            }
         }
 
         private void ReceivingMidiDevice_NoteOn(NoteOnMessage msg)
@@ -177,8 +194,10 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private void cmbMidiInputDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
+            bool midiDevicesExist = cmbMidiInputDevice.Items.Count > 0;
             chkTestMidiInputDevice.Checked = false;
-            chkTestMidiInputDevice.Enabled = cmbMidiInputDevice.Items.Count > 0;
+            chkTestMidiInputDevice.Enabled = midiDevicesExist;
+            grpMappings.Enabled = midiDevicesExist;
         }
 
         private void tbtnAddMapping_Click(object sender, EventArgs e)
