@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Midi;
 
@@ -43,26 +45,45 @@ namespace YuriyGuts.Midichlorian.VSPackage
             {
                 return;
             }
+
             midiDevice.NoteOn += MidiInputDevice_NoteOn;
 
             textView.GotAggregateFocus += textView_GotAggregateFocus;
-            textView.LostAggregateFocus += textView_LostAggregateFocus;
+            textView.Closed += textView_Closed;
         }
 
         private void textView_GotAggregateFocus(object sender, EventArgs e)
         {
-            midiDevice.Open();
-            midiDevice.StartReceiving(null);
+            if (!midiDevice.IsOpen)
+            {
+                midiDevice.Open();
+            }
+            if (!midiDevice.IsReceiving)
+            {
+                midiDevice.StartReceiving(null);
+            }
         }
 
-        private void textView_LostAggregateFocus(object sender, EventArgs e)
+        private void textView_Closed(object sender, EventArgs e)
         {
-            midiDevice.StopReceiving();
-            midiDevice.Close();
+            if (midiDevice.IsReceiving)
+            {
+                midiDevice.StopReceiving();
+            }
+            if (midiDevice.IsOpen)
+            {
+                midiDevice.Close();
+            }
         }
 
         private void MidiInputDevice_NoteOn(NoteOnMessage msg)
         {
+            // Allow executing actions only on the active document.
+            if (!textView.HasAggregateFocus)
+            {
+                return;
+            }
+
             // Somehow, when I release a key on my Axiom 61, a NoteOn message is received with Velocity = 0.
             // Not sure if it's specific to Axiom, MidiDotNet library, or my environment setup.
             if (msg.Velocity == 0)
@@ -103,7 +124,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 {
                     mapping.Action.Execute(textView);
                 }
-                // Put other action handlers here.
+                if (mapping.Action is ExecuteVsCommandAction)
+                {
+                    mapping.Action.Execute(ServiceProvider.GlobalProvider.GetService(typeof(SDTE)));
+                }
+                // Handle other actions here.
             }
         }
 

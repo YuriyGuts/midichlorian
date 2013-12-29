@@ -156,6 +156,7 @@
     <Compile Include="ActionExtendedParameterEditForm.Designer.cs">
       <DependentUpon>ActionExtendedParameterEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExecuteVsCommandAction.cs" />
     <Compile Include="IdeAutomatableAction.cs" />
     <Compile Include="InsertTextAction.cs" />
     <Compile Include="MidiEventBuffer.cs" />

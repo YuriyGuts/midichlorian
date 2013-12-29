@@ -31,6 +31,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 inputTrigger = record.Trigger;
                 action = record.Action;
 
+                RefreshActionSelection();
                 RefreshMidiInputText();
                 RefreshParameterText();
             }
@@ -59,6 +60,8 @@ namespace YuriyGuts.Midichlorian.VSPackage
             var actions = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => typeof(IdeAutomatableAction).IsAssignableFrom(type) && !type.IsAbstract)
                 .Select(Activator.CreateInstance)
+                .Cast<IdeAutomatableAction>()
+                .OrderBy(act => act.DisplayOrder)
                 .ToArray();
 
             cmbAction.DataSource = actions;
@@ -66,8 +69,13 @@ namespace YuriyGuts.Midichlorian.VSPackage
             if (actions.Length > 0)
             {
                 cmbAction.SelectedItem = actions[0];
-                action = (IdeAutomatableAction)actions[0];
+                action = actions[0];
             }
+        }
+
+        private void RefreshActionSelection()
+        {
+            cmbAction.SelectedItem = cmbAction.Items.Cast<IdeAutomatableAction>().FirstOrDefault(item => item.GetType() == action.GetType());
         }
 
         private void RefreshMidiInputText()
@@ -79,7 +87,9 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             if (action != null)
             {
-                txtActionParams.Text = SettingsPersistenceManager.EncodeActionParameter(action.Parameters.First().Value);
+                txtActionParams.Text = action.Parameters.Count > 0
+                    ? SettingsPersistenceManager.EncodeActionParameter(action.Parameters.First().Value)
+                    : string.Empty;
             }
         }
 
@@ -89,6 +99,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
             {
                 action.Parameters["Text"] = parameters;
             }
+            if (action is ExecuteVsCommandAction)
+            {
+                action.Parameters["CommandName"] = parameters;
+            }
+            // Handle other action types here.
         }
 
         protected virtual void OnMidiInputLearnRequested()
@@ -155,7 +170,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
         private void cmbAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedAction = (IdeAutomatableAction)cmbAction.SelectedValue;
-            if (selectedAction != null)
+            if (selectedAction != null && (action == null || selectedAction.GetType() != action.GetType()))
             {
                 action = selectedAction;
             }

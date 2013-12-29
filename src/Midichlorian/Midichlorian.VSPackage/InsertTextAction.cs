@@ -6,6 +6,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
     {
         public override string Name { get { return "Insert Text"; } }
 
+        public override int DisplayOrder
+        {
+            get { return 0; }
+        }
+
         public override void Execute(object state)
         {
             var textView = state as IWpfTextView;

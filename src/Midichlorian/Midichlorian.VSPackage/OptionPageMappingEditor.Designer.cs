@@ -71,7 +71,7 @@
             this.cmbAction.FormattingEnabled = true;
             this.cmbAction.Location = new System.Drawing.Point(216, 0);
             this.cmbAction.Name = "cmbAction";
-            this.cmbAction.Size = new System.Drawing.Size(88, 23);
+            this.cmbAction.Size = new System.Drawing.Size(98, 23);
             this.cmbAction.TabIndex = 2;
             this.cmbAction.SelectedIndexChanged += new System.EventHandler(this.cmbAction_SelectedIndexChanged);
             // 
@@ -81,9 +81,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtActionParams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtActionParams.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtActionParams.Location = new System.Drawing.Point(305, 0);
+            this.txtActionParams.Location = new System.Drawing.Point(315, 0);
             this.txtActionParams.Name = "txtActionParams";
-            this.txtActionParams.Size = new System.Drawing.Size(78, 23);
+            this.txtActionParams.Size = new System.Drawing.Size(68, 23);
             this.txtActionParams.TabIndex = 3;
             this.toolTip.SetToolTip(this.txtActionParams, "Action parameters");
             // 

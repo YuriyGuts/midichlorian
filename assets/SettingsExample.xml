@@ -5,7 +5,6 @@
     <Mapping inputSequence="C2" action="InsertTextAction" paramText="public " />
     <Mapping inputSequence="C#2" action="InsertTextAction" paramText="static " />
     <Mapping inputSequence="D2" action="InsertTextAction" paramText="void " />
-    <Mapping inputSequence="C2,E2,G2" action="InsertTextAction" paramText="Main" />
     <Mapping inputSequence="D#2" action="InsertTextAction" paramText="Main" />
     <Mapping inputSequence="E2" action="InsertTextAction" paramText="(" />
     <Mapping inputSequence="F2" action="InsertTextAction" paramText="string" />
@@ -13,7 +12,10 @@
     <Mapping inputSequence="G2" action="InsertTextAction" paramText=" " />
     <Mapping inputSequence="G#2" action="InsertTextAction" paramText="args" />
     <Mapping inputSequence="A2" action="InsertTextAction" paramText=")" />
-    <Mapping inputSequence="A#2" action="InsertTextAction" paramText=" " />
-    <Mapping inputSequence="B2" action="InsertTextAction" paramText=" " />
+    <Mapping inputSequence="A#2" action="InsertTextAction" paramText="base64:DQo=" />
+    <Mapping inputSequence="B2" action="InsertTextAction" paramText="base64:eyBDb25zb2xlLldyaXRlTGluZSgiSGVsbG8gd29ybGQhIik7IH0=" />
+    <Mapping inputSequence="C2,E2,G2" action="ExecuteVsCommandAction" paramCommandName="Debug.Start" />
+    <Mapping inputSequence="C#3" action="ExecuteVsCommandAction" paramCommandName="Edit.Undo" />
+    <Mapping inputSequence="D#3" action="ExecuteVsCommandAction" paramCommandName="Edit.Redo" />
   </MidiMappings>
 </Midichlorian>

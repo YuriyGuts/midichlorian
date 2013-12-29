@@ -11,6 +11,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         public abstract string Name { get; }
 
+        public virtual int DisplayOrder
+        {
+            get { return int.MaxValue; }
+        }
+
         public Dictionary<string, string> Parameters { get; set; }
 
         public abstract void Execute(object state);
