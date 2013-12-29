@@ -2,6 +2,9 @@
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// A MIDI-triggered action that causes the VS host to perform some tasks.
+    /// </summary>
     public abstract class IdeAutomatableAction
     {
         protected IdeAutomatableAction()

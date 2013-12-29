@@ -2,6 +2,9 @@
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// A MIDI-triggered action that causes the VS text editor to insert a piece of text at the caret position.
+    /// </summary>
     public class InsertTextAction : IdeAutomatableAction
     {
         public override string Name { get { return "Insert Text"; } }

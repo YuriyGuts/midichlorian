@@ -9,6 +9,9 @@ using System.Xml.Linq;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Handles the tasks related to saving and loading settings from files.
+    /// </summary>
     internal static class SettingsPersistenceManager
     {
         private const string Xml_RootElement = "Midichlorian";

@@ -5,6 +5,9 @@ using Microsoft.VisualStudio.Shell;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Handles the interaction with the VS Options page.
+    /// </summary>
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [Guid(PackageGuids.PackageOptionsGuidString)]
     public class OptionPage : DialogPage

@@ -2,6 +2,9 @@
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Provides utilities for serializing/deserializing Pitch objects from other formats.
+    /// </summary>
     internal class PitchConverter
     {
         public static string PitchToString(Pitch pitch)

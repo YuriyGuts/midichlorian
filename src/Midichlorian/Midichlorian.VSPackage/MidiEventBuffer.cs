@@ -3,6 +3,9 @@ using Midi;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Represents a set of MIDI events that are recorded within a continuous time period.
+    /// </summary>
     internal class MidiEventBuffer
     {
         private ConcurrentQueue<NoteMessage> eventQueue;

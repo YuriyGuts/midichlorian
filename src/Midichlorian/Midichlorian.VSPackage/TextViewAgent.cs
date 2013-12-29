@@ -9,6 +9,9 @@ using Midi;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Attaches to Visual Studio text editor windows, listens to MIDI events and initiates their processing.
+    /// </summary>
     internal class TextViewAgent
     {
         private static readonly TimeSpan chordWaitTime = TimeSpan.FromMilliseconds(100);

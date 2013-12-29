@@ -5,6 +5,9 @@ using Midi;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Represents a set of MIDI events that should be recognized by the MIDI listener and cause actions.
+    /// </summary>
     public class MidiInputTrigger
     {
         private static readonly char[] separatorChars = { ',', ' ' };

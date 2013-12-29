@@ -4,6 +4,9 @@ using Midi;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Recognizes MidiInputTriggers in events received from a MIDI device.
+    /// </summary>
     internal class MidiMappingMatcher
     {
         private readonly MidiMappingProfile mappingProfile;

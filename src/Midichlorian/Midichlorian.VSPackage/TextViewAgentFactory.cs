@@ -4,6 +4,10 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// Notifies the VS host that we need to listen to text editor creation events
+    /// and instantiates a TextViewAgent when an IWpfTextView has been created.
+    /// </summary>
     [Export(typeof(IWpfTextViewCreationListener))]
     [ContentType("text")]
     [TextViewRole(PredefinedTextViewRoles.Document)]

@@ -4,6 +4,9 @@ using EnvDTE;
 
 namespace YuriyGuts.Midichlorian.VSPackage
 {
+    /// <summary>
+    /// A MIDI-triggered action that causes the VS host to run a VS command identified by its name.
+    /// </summary>
     public class ExecuteVsCommandAction : IdeAutomatableAction
     {
         public override string Name
