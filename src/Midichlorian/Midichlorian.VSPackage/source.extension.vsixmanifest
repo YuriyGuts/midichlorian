@@ -4,14 +4,16 @@
     <Identity Id="e2e1b11d-6fcc-47ef-bb62-282315b08784" Version="1.0" Language="en-US" Publisher="Yuriy Guts" />
     <DisplayName>Midichlorian</DisplayName>
     <Description xml:space="preserve">Allows to write code using music (via MIDI interface).</Description>
+    <MoreInfo>https://github.com/YuriyGuts/midichlorian</MoreInfo>
+    <License>LICENSE</License>
     <Icon>Resources\Package.ico</Icon>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0]" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0)" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0]" />
+    <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0,13.0)" />
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
