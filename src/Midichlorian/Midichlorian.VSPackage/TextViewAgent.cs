@@ -25,6 +25,10 @@ namespace YuriyGuts.Midichlorian.VSPackage
         public TextViewAgent(IWpfTextView view)
         {
             textView = view;
+            textView.GotAggregateFocus += textView_GotAggregateFocus;
+            textView.Closed += textView_Closed;
+            OptionPage.SettingsChanged += OptionPage_SettingsChanged;
+
             LoadSettings();
             SetUpMidiListener();
         }
@@ -37,26 +41,19 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private void SetUpMidiListener()
         {
-            // TODO: Handle the case when the device is changed via Options page.
+            midiDevice = InputDevice.InstalledDevices.FirstOrDefault(dev => dev.Name == settings.MidiInputDeviceName);
             if (midiDevice != null)
             {
-                return;
+                midiDevice.NoteOn += MidiInputDevice_NoteOn;
             }
+        }
 
-            midiDevice = InputDevice.InstalledDevices.FirstOrDefault(dev => dev.Name == settings.MidiInputDeviceName);
+        private void ActivateMidiListener()
+        {
             if (midiDevice == null)
             {
                 return;
             }
-
-            midiDevice.NoteOn += MidiInputDevice_NoteOn;
-
-            textView.GotAggregateFocus += textView_GotAggregateFocus;
-            textView.Closed += textView_Closed;
-        }
-
-        private void textView_GotAggregateFocus(object sender, EventArgs e)
-        {
             if (!midiDevice.IsOpen)
             {
                 midiDevice.Open();
@@ -67,8 +64,12 @@ namespace YuriyGuts.Midichlorian.VSPackage
             }
         }
 
-        private void textView_Closed(object sender, EventArgs e)
+        private void DeactivateMidiListener()
         {
+            if (midiDevice == null)
+            {
+                return;
+            }
             if (midiDevice.IsReceiving)
             {
                 midiDevice.StopReceiving();
@@ -77,6 +78,31 @@ namespace YuriyGuts.Midichlorian.VSPackage
             {
                 midiDevice.Close();
             }
+        }
+
+        private void TearDownMidiListener()
+        {
+            midiDevice.NoteOn -= MidiInputDevice_NoteOn;
+        }
+
+        private void textView_GotAggregateFocus(object sender, EventArgs e)
+        {
+            ActivateMidiListener();
+        }
+
+        private void textView_Closed(object sender, EventArgs e)
+        {
+            OptionPage.SettingsChanged -= OptionPage_SettingsChanged;
+            DeactivateMidiListener();
+        }
+
+        private void OptionPage_SettingsChanged(object sender, EventArgs e)
+        {
+            DeactivateMidiListener();
+            TearDownMidiListener();
+            LoadSettings();
+            SetUpMidiListener();
+            ActivateMidiListener();
         }
 
         private void MidiInputDevice_NoteOn(NoteOnMessage msg)

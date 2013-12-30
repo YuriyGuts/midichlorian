@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
@@ -28,6 +29,17 @@ namespace YuriyGuts.Midichlorian.VSPackage
             }
         }
 
+        public static event EventHandler SettingsChanged;
+
+        protected static void OnSettingsChanged()
+        {
+            EventHandler handler = SettingsChanged;
+            if (handler != null)
+            {
+                handler(null, EventArgs.Empty);
+            }
+        }
+
         protected override void OnActivate(CancelEventArgs e)
         {
             base.OnActivate(e);
@@ -39,6 +51,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
             base.SaveSettingsToStorage();
             var newSettings = optionPageControl.GetSettingsFromUI();
             SettingsPersistenceManager.SaveSettings(newSettings);
+            OnSettingsChanged();
         }
     }
 }
