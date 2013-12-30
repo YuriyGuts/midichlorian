@@ -45,7 +45,7 @@
             this.btnLearnInputFromMidi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLearnInputFromMidi.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnLearnInputFromMidi.Image = global::YuriyGuts.Midichlorian.VSPackage.Resources.MappingLearn;
-            this.btnLearnInputFromMidi.Location = new System.Drawing.Point(132, 0);
+            this.btnLearnInputFromMidi.Location = new System.Drawing.Point(101, 0);
             this.btnLearnInputFromMidi.Name = "btnLearnInputFromMidi";
             this.btnLearnInputFromMidi.Size = new System.Drawing.Size(28, 23);
             this.btnLearnInputFromMidi.TabIndex = 0;
@@ -61,7 +61,7 @@
             this.txtInputTrigger.Location = new System.Drawing.Point(39, 0);
             this.txtInputTrigger.Name = "txtInputTrigger";
             this.txtInputTrigger.ReadOnly = true;
-            this.txtInputTrigger.Size = new System.Drawing.Size(92, 23);
+            this.txtInputTrigger.Size = new System.Drawing.Size(61, 23);
             this.txtInputTrigger.TabIndex = 1;
             // 
             // cmbAction
@@ -69,7 +69,7 @@
             this.cmbAction.DisplayMember = "Name";
             this.cmbAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAction.FormattingEnabled = true;
-            this.cmbAction.Location = new System.Drawing.Point(216, 0);
+            this.cmbAction.Location = new System.Drawing.Point(179, 0);
             this.cmbAction.Name = "cmbAction";
             this.cmbAction.Size = new System.Drawing.Size(98, 23);
             this.cmbAction.TabIndex = 2;
@@ -81,16 +81,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtActionParams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtActionParams.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtActionParams.Location = new System.Drawing.Point(315, 0);
+            this.txtActionParams.Location = new System.Drawing.Point(278, 0);
             this.txtActionParams.Name = "txtActionParams";
-            this.txtActionParams.Size = new System.Drawing.Size(68, 23);
+            this.txtActionParams.Size = new System.Drawing.Size(105, 23);
             this.txtActionParams.TabIndex = 3;
             this.toolTip.SetToolTip(this.txtActionParams, "Action parameters");
             // 
             // lblAction
             // 
             this.lblAction.AutoSize = true;
-            this.lblAction.Location = new System.Drawing.Point(169, 3);
+            this.lblAction.Location = new System.Drawing.Point(133, 3);
             this.lblAction.Name = "lblAction";
             this.lblAction.Size = new System.Drawing.Size(45, 15);
             this.lblAction.TabIndex = 4;
