@@ -6,7 +6,7 @@ using YuriyGuts.Midichlorian.VSPackage;
 namespace Midichlorian.VSPackage.Tests
 {
     [TestFixture]
-    public class PitchConverter_Tests
+    internal class PitchConverter_Tests
     {
         [TestCase(Pitch.A1, Result = "A1")]
         [TestCase(Pitch.B1, Result = "B1")]

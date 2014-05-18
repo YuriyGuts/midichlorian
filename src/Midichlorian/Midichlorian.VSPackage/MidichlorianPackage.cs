@@ -45,7 +45,6 @@ namespace YuriyGuts.Midichlorian.VSPackage
         {
             Debug.WriteLine("Entering Initialize() of: {0}", ToString());
             base.Initialize();
-
         }
 
         #endregion

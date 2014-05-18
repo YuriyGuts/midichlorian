@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MidiEventBuffer_Tests.cs" />
+    <Compile Include="MidiInputTrigger_Tests.cs" />
+    <Compile Include="MidiMappingMatcher_Tests.cs" />
     <Compile Include="PitchConverter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

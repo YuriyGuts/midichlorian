@@ -23,29 +23,29 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 .ToArray();
         }
 
-        public MidiMappingRecord[] FindChordMatches(Pitch pitch)
+        public MidiMappingRecord[] FindChordMatchesContainingNote(Pitch pitch)
         {
             return mappingProfile.Mappings
                 .Where(mapping => mapping.Trigger.IsChord && mapping.Trigger.Pitches.Any(p => p == pitch))
                 .ToArray();
         }
 
-        public MidiMappingRecord[] FindBufferMatches(NoteMessage[] bufferedEvents)
+        public MidiMappingRecord[] FindMatchesInBuffer(Pitch[] buffer)
         {
             var results = new List<MidiMappingRecord>();
-            var events = (NoteMessage[])bufferedEvents.Clone();
+            var events = buffer.Cast<Pitch?>().ToArray();
 
             // Process chords first.
             // This is O(scary), but seems quick enough in practice. (c) StackOverflow #184618
             foreach (var mapping in mappingProfile.Mappings.Where(m => m.Trigger.IsChord))
             {
-                bool isChordComplete = mapping.Trigger.Pitches.All(p => events.Any(e => e != null && e.Pitch == p));
+                bool isChordComplete = mapping.Trigger.Pitches.All(p => events.Any(e => e.HasValue && e == p));
                 if (isChordComplete)
                 {
                     // Exclude matched notes from further processing.
                     for (int i = 0; i < events.Length; i++)
                     {
-                        var pitch = events[i].Pitch;
+                        var pitch = events[i].Value;
                         if (mapping.Trigger.Pitches.Any(p => p == pitch))
                         {
                             events[i] = null;
@@ -56,9 +56,9 @@ namespace YuriyGuts.Midichlorian.VSPackage
             }
 
             // Process remaining single notes.
-            foreach (var e in events.Where(e => e != null))
+            foreach (var e in events.Where(e => e.HasValue))
             {
-                results.AddRange(FindSingleNoteMatches(e.Pitch));
+                results.AddRange(FindSingleNoteMatches(e.Value));
             }
 
             return results.ToArray();

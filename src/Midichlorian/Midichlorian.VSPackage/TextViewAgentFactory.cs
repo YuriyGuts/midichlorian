@@ -24,6 +24,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
         /// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
         public void TextViewCreated(IWpfTextView textView)
         {
+            // Weird, right? But this is the way it's supposed to be according to the VS SDK template.
             new TextViewAgent(textView);
         }
     }

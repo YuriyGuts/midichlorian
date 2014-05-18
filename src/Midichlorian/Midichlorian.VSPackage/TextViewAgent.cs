@@ -127,7 +127,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
                 return;
             }
 
-            var chordMatches = mappingMatcher.FindChordMatches(msg.Pitch);
+            var chordMatches = mappingMatcher.FindChordMatchesContainingNote(msg.Pitch);
             if (chordMatches.Length > 0)
             {
                 // If the note belongs to a chord, we should hold on for a short time
@@ -167,8 +167,8 @@ namespace YuriyGuts.Midichlorian.VSPackage
             Thread.Sleep(chordWaitTime);
 
             // Process collected events.
-            var bufferedEvents = eventBuffer.Flush();
-            var matchedMappings = mappingMatcher.FindBufferMatches(bufferedEvents);
+            var bufferedEvents = eventBuffer.Flush().Select(evt => evt.Pitch).ToArray();
+            var matchedMappings = mappingMatcher.FindMatchesInBuffer(bufferedEvents);
             ExecuteMappedActions(matchedMappings);
 
             // Reset the buffer to return to normal mode.

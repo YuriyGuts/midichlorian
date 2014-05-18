@@ -29,7 +29,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
             // Do not allow flats and double accidentals (YAGNI).
             if (note.Accidental < 0 || note.Accidental > 1)
             {
-                throw new ArgumentException("Flats and double accidentals are note supported.");
+                throw new ArgumentException("Flats and double accidentals are not supported.");
             }
 
             return note.PitchInOctave(octave);

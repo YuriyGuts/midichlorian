@@ -22,6 +22,8 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         public bool IsChord
         {
+            // Here we're interested only if there's one note or multiple notes,
+            // not the actual musical definition of a chord (e.g. at least 3 distinct notes).
             get { return Pitches.Length > 1; }
         }
 
