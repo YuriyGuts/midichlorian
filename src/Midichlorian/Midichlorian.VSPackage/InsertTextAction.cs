@@ -14,6 +14,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
             get { return 0; }
         }
 
+        public override void LoadParametersFromString(string paramString)
+        {
+            Parameters["Text"] = paramString;
+        }
+
         public override void Execute(object state)
         {
             var textView = state as IWpfTextView;

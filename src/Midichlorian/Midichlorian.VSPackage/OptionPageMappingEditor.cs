@@ -95,15 +95,7 @@ namespace YuriyGuts.Midichlorian.VSPackage
 
         private void SaveActionParameters(string parameters)
         {
-            if (action is InsertTextAction)
-            {
-                action.Parameters["Text"] = parameters;
-            }
-            if (action is ExecuteVsCommandAction)
-            {
-                action.Parameters["CommandName"] = parameters;
-            }
-            // Handle other action types here.
+            action.LoadParametersFromString(parameters);
         }
 
         protected virtual void OnMidiInputLearnRequested()

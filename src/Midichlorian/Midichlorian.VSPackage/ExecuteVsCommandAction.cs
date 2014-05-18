@@ -19,6 +19,11 @@ namespace YuriyGuts.Midichlorian.VSPackage
             get { return 1; }
         }
 
+        public override void LoadParametersFromString(string paramString)
+        {
+            Parameters["CommandName"] = paramString;
+        }
+
         public override void Execute(object state)
         {
             var dte = state as DTE;
