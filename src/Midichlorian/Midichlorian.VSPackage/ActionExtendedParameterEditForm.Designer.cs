@@ -46,7 +46,7 @@
             this.pnlMainContent.Location = new System.Drawing.Point(0, 0);
             this.pnlMainContent.Name = "pnlMainContent";
             this.pnlMainContent.Padding = new System.Windows.Forms.Padding(8, 8, 8, 0);
-            this.pnlMainContent.Size = new System.Drawing.Size(434, 103);
+            this.pnlMainContent.Size = new System.Drawing.Size(438, 103);
             this.pnlMainContent.TabIndex = 0;
             // 
             // txtExtendedParams
@@ -58,7 +58,7 @@
             this.txtExtendedParams.Location = new System.Drawing.Point(8, 8);
             this.txtExtendedParams.Multiline = true;
             this.txtExtendedParams.Name = "txtExtendedParams";
-            this.txtExtendedParams.Size = new System.Drawing.Size(418, 95);
+            this.txtExtendedParams.Size = new System.Drawing.Size(422, 95);
             this.txtExtendedParams.TabIndex = 0;
             this.txtExtendedParams.TextChanged += new System.EventHandler(this.txtExtendedParams_TextChanged);
             // 
@@ -72,26 +72,26 @@
             this.pnlButtons.Location = new System.Drawing.Point(0, 103);
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Padding = new System.Windows.Forms.Padding(8);
-            this.pnlButtons.Size = new System.Drawing.Size(434, 43);
+            this.pnlButtons.Size = new System.Drawing.Size(438, 43);
             this.pnlButtons.TabIndex = 1;
             // 
             // lblEscapeWarning
             // 
             this.lblEscapeWarning.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblEscapeWarning.ForeColor = System.Drawing.Color.Brown;
+            this.lblEscapeWarning.ForeColor = System.Drawing.Color.Teal;
             this.lblEscapeWarning.Location = new System.Drawing.Point(8, 7);
             this.lblEscapeWarning.Name = "lblEscapeWarning";
-            this.lblEscapeWarning.Size = new System.Drawing.Size(235, 28);
+            this.lblEscapeWarning.Size = new System.Drawing.Size(249, 28);
             this.lblEscapeWarning.TabIndex = 3;
-            this.lblEscapeWarning.Text = "Warning: the text will be encoded in Base64 due to characters that require escapi" +
-    "ng.";
+            this.lblEscapeWarning.Text = "Note: the text contains some special characters so we\'ll encode it in Base64 for " +
+    "you.";
             this.lblEscapeWarning.Visible = false;
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOK.Location = new System.Drawing.Point(258, 8);
+            this.btnOK.Location = new System.Drawing.Point(262, 8);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(80, 27);
             this.btnOK.TabIndex = 1;
@@ -101,7 +101,7 @@
             // pnlButtonSpacer
             // 
             this.pnlButtonSpacer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlButtonSpacer.Location = new System.Drawing.Point(338, 8);
+            this.pnlButtonSpacer.Location = new System.Drawing.Point(342, 8);
             this.pnlButtonSpacer.Name = "pnlButtonSpacer";
             this.pnlButtonSpacer.Size = new System.Drawing.Size(8, 27);
             this.pnlButtonSpacer.TabIndex = 2;
@@ -110,7 +110,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(346, 8);
+            this.btnCancel.Location = new System.Drawing.Point(350, 8);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 27);
             this.btnCancel.TabIndex = 0;
@@ -123,7 +123,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(434, 146);
+            this.ClientSize = new System.Drawing.Size(438, 146);
             this.Controls.Add(this.pnlMainContent);
             this.Controls.Add(this.pnlButtons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
