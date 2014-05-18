@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="e2e1b11d-6fcc-47ef-bb62-282315b08784" Version="1.0" Language="en-US" Publisher="Yuriy Guts" />
     <DisplayName>Midichlorian</DisplayName>
-    <Description xml:space="preserve">Allows to write code using music (via MIDI interface).</Description>
+    <Description xml:space="preserve">Allows to write code and automate the IDE using MIDI musical instruments.</Description>
     <MoreInfo>https://github.com/YuriyGuts/midichlorian</MoreInfo>
     <License>LICENSE</License>
     <Icon>Resources\Package.ico</Icon>

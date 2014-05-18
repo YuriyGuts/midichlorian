@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Midichlorian.VSPackage")]
-[assembly: AssemblyDescription("A Visual Studio add-in that allows to write code using music (via MIDI interface).")]
+[assembly: AssemblyDescription("A Visual Studio extension that allows to write code and automate the IDE using MIDI musical instruments.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Yuriy Guts")]
 [assembly: AssemblyProduct("Midichlorian.VSPackage")]
