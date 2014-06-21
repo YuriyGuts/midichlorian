@@ -313,5 +313,29 @@ namespace Midichlorian.VSPackage.Tests
             Assert.AreEqual(1, matchesFound.Length);
             Assert.IsTrue(matchesFound[0].Trigger.IsChord);
         }
+
+        [Test]
+        public void FindMatchesInBuffer_TwoOverlappingChordsCaptured_MatchesTheBiggerOne_Test()
+        {
+            // Arrange
+            var profile = new MidiMappingProfile
+            {
+                Mappings = new List<MidiMappingRecord>
+                {
+                    new MidiMappingRecord { Trigger = new MidiInputTrigger(new[] { Pitch.C1, Pitch.G1 }) },
+                    new MidiMappingRecord { Trigger = new MidiInputTrigger(new[] { Pitch.C1, Pitch.E1, Pitch.G1 }) },
+                }
+            };
+
+            var matcher = new MidiMappingMatcher(profile);
+            var buffer = new[] { Pitch.C1, Pitch.E1, Pitch.G1 };
+
+            // Act
+            var matchesFound = matcher.FindMatchesInBuffer(buffer);
+
+            // Assert
+            Assert.AreEqual(1, matchesFound.Length);
+            Assert.AreEqual(3, matchesFound[0].Trigger.Pitches.Length);
+        }
     }
 }

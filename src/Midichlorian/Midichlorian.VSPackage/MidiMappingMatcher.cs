@@ -10,10 +10,17 @@ namespace YuriyGuts.Midichlorian.VSPackage
     internal class MidiMappingMatcher
     {
         private readonly MidiMappingProfile mappingProfile;
+        private readonly List<MidiMappingRecord> chordMappingsOrdered; 
 
         public MidiMappingMatcher(MidiMappingProfile mappingProfile)
         {
             this.mappingProfile = mappingProfile;
+            
+            // Cache chords aggressively, we'll need to scan them quickly.
+            chordMappingsOrdered = mappingProfile.Mappings
+                .Where(m => m.Trigger.IsChord)
+                .OrderByDescending(m => m.Trigger.Pitches.Count())
+                .ToList();
         }
 
         public MidiMappingRecord[] FindSingleNoteMatches(Pitch pitch)
@@ -35,9 +42,9 @@ namespace YuriyGuts.Midichlorian.VSPackage
             var results = new List<MidiMappingRecord>();
             var events = buffer.Cast<Pitch?>().ToArray();
 
-            // Process chords first.
+            // Process chords first. Try to capture a chord with as many notes as possible.
             // This is O(scary), but seems quick enough in practice. (c) StackOverflow #184618
-            foreach (var mapping in mappingProfile.Mappings.Where(m => m.Trigger.IsChord))
+            foreach (var mapping in chordMappingsOrdered)
             {
                 bool isChordComplete = mapping.Trigger.Pitches.All(p => events.Any(e => e.HasValue && e == p));
                 if (isChordComplete)
