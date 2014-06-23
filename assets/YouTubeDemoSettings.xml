@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Midichlorian>
+  <MidiInputDeviceName>Rig Kontrol 3 MIDI In</MidiInputDeviceName>
+  <MidiMappings>
+    <Mapping inputSequence="B4" action="InsertTextAction" paramText="u" />
+    <Mapping inputSequence="E4" action="InsertTextAction" paramText="s" />
+    <Mapping inputSequence="G#4" action="InsertTextAction" paramText="i" />
+    <Mapping inputSequence="D#4" action="InsertTextAction" paramText="n" />
+    <Mapping inputSequence="E3,G#3" action="InsertTextAction" paramText="g" />
+    <Mapping inputSequence="F#4,F#5" action="InsertTextAction" paramText="C" />
+    <Mapping inputSequence="F#4" action="InsertTextAction" paramText="c" />
+    <Mapping inputSequence="E4,E5" action="InsertTextAction" paramText="S" />
+    <Mapping inputSequence="C#5" action="InsertTextAction" paramText="y" />
+    <Mapping inputSequence="D#4,B4" action="InsertTextAction" paramText="t" />
+    <Mapping inputSequence="A4" action="InsertTextAction" paramText="e" />
+    <Mapping inputSequence="E4,G#4" action="InsertTextAction" paramText="m." />
+    <Mapping inputSequence="B4,G#5" action="InsertTextAction" paramText="M" />
+    <Mapping inputSequence="G#4,E5" action="InsertTextAction" paramText="o" />
+    <Mapping inputSequence="B3,G#4" action="InsertTextAction" paramText="l" />
+    <Mapping inputSequence="E4,A4" action="InsertTextAction" paramText="a" />
+    <Mapping inputSequence="D#4,D#5" action="InsertTextAction" paramText="base64:UA0Kew==" />
+    <Mapping inputSequence="G#3,D#4" action="InsertTextAction" paramText="v" />
+    <Mapping inputSequence="A4,C#5" action="InsertTextAction" paramText="d" />
+    <Mapping inputSequence="C#4,F#4" action="InsertTextAction" paramText="W" />
+    <Mapping inputSequence="C#4,D#4" action="InsertTextAction" paramText="r" />
+    <Mapping inputSequence="G#4,D#5" action="InsertTextAction" paramText="R" />
+    <Mapping inputSequence="D#5" action="InsertTextAction" paramText="K" />
+    <Mapping inputSequence="A2" action="InsertTextAction" paramText="=" />
+    <Mapping inputSequence="A2,C#3" action="InsertTextAction" paramText="base64:DQo=" />
+    <Mapping inputSequence="G#2" action="InsertTextAction" paramText=" " />
+    <Mapping inputSequence="G#5" action="InsertTextAction" paramText="." />
+    <Mapping inputSequence="E3" action="InsertTextAction" paramText=";" />
+    <Mapping inputSequence="F#2,G#2" action="InsertTextAction" paramText="base64:KCkNCns=" />
+    <Mapping inputSequence="F#4,A4,C#5,F#5" action="InsertTextAction" paramText="base64:KCJIZWxsbyBXb3JsZCEiKTsNCg==" />
+    <Mapping inputSequence="C#4,G#4" action="InsertTextAction" paramText="L" />
+    <Mapping inputSequence="A2,C#3,E3" action="InsertTextAction" paramText="" />
+    <Mapping inputSequence="C#4,F4,G#4" action="InsertTextAction" paramText="base64:KCk7DQp9DQp9" />
+    <Mapping inputSequence="C#1,C#4,F4,G#4" action="ExecuteVsCommandAction" paramCommandName="Edit.FormatDocument" />
+    <Mapping inputSequence="C#1" action="ExecuteVsCommandAction" paramCommandName="Debug.Start" />
+  </MidiMappings>
+</Midichlorian>
