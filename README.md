@@ -1,7 +1,7 @@
 Midichlorian
 ============
 
-A Visual Studio extension that allows to write code and automate the IDE using MIDI musical instruments.
+A Visual Studio extension that allows you to write code and automate the IDE using MIDI musical instruments.
 
 See the details in my blog post: [Programming on a Keyboard... a Piano Keyboard](http://elekslabs.com/2014/06/programming-on-a-keyboard-a-piano-keyboard.html)
 
